@@ -12,6 +12,18 @@ let targetNumber;
 let attempts = 0;
 const maxNumberOfAttempts = 5;
 
+//enforces input range
+document.getElementById('guess').oninput = function () {
+        let max = parseInt(this.max);
+        let min=parseInt(this.min);
+        if (parseInt(this.value) > max) {
+            this.value = max; 
+        } else if(parseInt(this.value) < min){
+          this.value = min
+        }
+    }
+
+
 // Returns a random number from min (inclusive) to max (exclusive)
 // Usage:
 // > getRandomNumber(1, 50)
@@ -49,14 +61,19 @@ function checkGuess() {
     const remainingAttempts = maxNumberOfAttempts - attempts;
 
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
+    if (remainingAttempts == 1) {
+      numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesse remaining`;
+    }
+    else {
+      numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
+    }
   }
 
   if (attempts == maxNumberOfAttempts) {
     submitButton.disabled = true;
     guessInput.disabled = true;
     maxGuessesMessage.style.display = '';
-    numberOfGuessesMessage.style.display = 'none';
+
   }
 
   guessInput.value = '';
